@@ -1,0 +1,9 @@
+<div class="word-display">
+  <span
+    *ngFor="let letter of maskedWord; let i = index"
+    class="letter-slot"
+    [class.revealed]="letter !== '_'"
+  >
+    {{ letter === '_' ? '' : letter }}
+  </span>
+</div>

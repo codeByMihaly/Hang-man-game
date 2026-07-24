@@ -1,0 +1,258 @@
+.game-container {
+  min-height: 100vh;
+  background: #1a1a2e;
+  color: #ecf0f1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.game-header {
+  text-align: center;
+  margin-bottom: 0.75rem;
+
+  .game-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: #e74c3c;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .game-subtitle {
+    margin: 0.25rem 0 0;
+    color: #95a5a6;
+    font-size: 0.9rem;
+  }
+}
+
+/* ── Score Board ─────────────────────────────── */
+.scoreboard {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+  background: #16213e;
+  border: 1px solid #34495e;
+  border-radius: 10px;
+  padding: 0.5rem 2rem;
+}
+
+.score-divider {
+  color: #34495e;
+  font-size: 1.4rem;
+}
+
+.score-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+
+  .score-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #95a5a6;
+  }
+
+  .score-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+  }
+
+  &.wins .score-value   { color: #2ecc71; }
+  &.losses .score-value { color: #e74c3c; }
+}
+
+/* ── Status Banner ───────────────────────────── */
+.status-banner {
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  animation: fadeIn 0.4s ease;
+
+  &.won {
+    background: rgba(46, 204, 113, 0.2);
+    border: 2px solid #2ecc71;
+    color: #2ecc71;
+  }
+
+  &.lost {
+    background: rgba(231, 76, 60, 0.2);
+    border: 2px solid #e74c3c;
+    color: #e74c3c;
+  }
+}
+
+/* ── Layout ──────────────────────────────────── */
+.game-body {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 800px;
+}
+
+.svg-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 220px;
+
+  .attempts-left {
+    margin-top: 0.75rem;
+    color: #95a5a6;
+    font-size: 0.85rem;
+    transition: color 0.3s ease;
+
+    &.danger {
+      color: #e74c3c;
+      font-weight: 700;
+      animation: pulse 0.8s ease infinite alternate;
+    }
+  }
+}
+
+.word-panel {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Category hint ───────────────────────────── */
+.category-hint {
+  font-size: 0.85rem;
+  color: #95a5a6;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.04em;
+
+  strong {
+    color: #3498db;
+  }
+}
+
+/* ── Wrong letters ───────────────────────────── */
+.wrong-letters {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  min-height: 1.5rem;
+  color: #e74c3c;
+
+  .wrong-label {
+    color: #95a5a6;
+    margin-right: 0.25rem;
+  }
+
+  .wrong-letter {
+    display: inline-block;
+    margin: 0 0.15rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
+
+/* ── Alphabet keyboard ───────────────────────── */
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+  max-width: 360px;
+  margin: 0.5rem 0 1rem;
+}
+
+.key-btn {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 6px;
+  border: 2px solid #34495e;
+  background: #16213e;
+  color: #ecf0f1;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+  text-transform: uppercase;
+
+  &:hover:not([disabled]) {
+    background: #0f3460;
+    border-color: #3498db;
+    color: #fff;
+    transform: scale(1.1);
+  }
+
+  &:active:not([disabled]) {
+    transform: scale(0.95);
+  }
+
+  &.correct {
+    background: rgba(46, 204, 113, 0.2);
+    border-color: #2ecc71;
+    color: #2ecc71;
+    cursor: default;
+  }
+
+  &.wrong {
+    background: rgba(231, 76, 60, 0.15);
+    border-color: #e74c3c;
+    color: #e74c3c;
+    cursor: default;
+  }
+
+  &[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+/* ── New Game ────────────────────────────────── */
+.new-game-row {
+  margin-top: 2rem;
+}
+
+.new-game-btn {
+  padding: 0.75rem 2.5rem;
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: background 0.15s ease, transform 0.1s ease;
+
+  &:hover {
+    background: #c0392b;
+    transform: scale(1.03);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/* ── Animations ──────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  from { opacity: 1; }
+  to   { opacity: 0.5; }
+}

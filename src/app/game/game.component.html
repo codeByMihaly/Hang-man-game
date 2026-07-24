@@ -1,0 +1,79 @@
+<div class="game-container">
+  <header class="game-header">
+    <h1 class="game-title">Hangman</h1>
+    <p class="game-subtitle">Guess the word — click a letter or press a key!</p>
+  </header>
+
+  <!-- Score Board -->
+  <div class="scoreboard">
+    <div class="score-item wins">
+      <span class="score-label">Wins</span>
+      <span class="score-value">{{ wins }}</span>
+    </div>
+    <div class="score-divider">|</div>
+    <div class="score-item losses">
+      <span class="score-label">Losses</span>
+      <span class="score-value">{{ losses }}</span>
+    </div>
+  </div>
+
+  <ng-container *ngIf="state">
+    <!-- Status Banner -->
+    <div class="status-banner" *ngIf="state.gameStatus !== 'playing'"
+         [class.won]="state.gameStatus === 'won'"
+         [class.lost]="state.gameStatus === 'lost'">
+      <ng-container *ngIf="state.gameStatus === 'won'">
+        You won! The word was <strong>{{ state.word }}</strong>
+      </ng-container>
+      <ng-container *ngIf="state.gameStatus === 'lost'">
+        Game over! The word was <strong>{{ state.word }}</strong>
+      </ng-container>
+    </div>
+
+    <!-- Main Game Area -->
+    <div class="game-body">
+      <!-- Left: Hangman SVG -->
+      <div class="svg-panel">
+        <app-hangman-svg [wrongGuesses]="wrongGuessCount"></app-hangman-svg>
+        <p class="attempts-left"
+           [class.danger]="remainingGuesses <= 2">
+          {{ remainingGuesses }} attempt{{ remainingGuesses !== 1 ? 's' : '' }} left
+        </p>
+      </div>
+
+      <!-- Right: Word + Keyboard -->
+      <div class="word-panel">
+        <!-- Category hint -->
+        <div class="category-hint" *ngIf="state.category">
+          Category: <strong>{{ state.category }}</strong>
+        </div>
+
+        <app-word-display [maskedWord]="maskedWord"></app-word-display>
+
+        <!-- Wrong letters display -->
+        <div class="wrong-letters" *ngIf="wrongLetters.length > 0">
+          <span class="wrong-label">Wrong: </span>
+          <span *ngFor="let l of wrongLetters" class="wrong-letter">{{ l }}</span>
+        </div>
+
+        <!-- Alphabet keyboard -->
+        <div class="keyboard" *ngIf="state.gameStatus === 'playing'">
+          <button
+            *ngFor="let letter of alphabet"
+            class="key-btn"
+            [class.wrong]="isWrong(letter)"
+            [class.correct]="isGuessed(letter) && !isWrong(letter)"
+            [disabled]="isGuessed(letter)"
+            (click)="onLetterClick(letter)">
+            {{ letter }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Game button -->
+    <div class="new-game-row">
+      <button class="new-game-btn" (click)="newGame()">New Game</button>
+    </div>
+  </ng-container>
+</div>
