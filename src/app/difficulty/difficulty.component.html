@@ -1,0 +1,23 @@
+<div class="menu-container">
+  <div class="menu-card">
+    <button class="back-btn" (click)="goBack()">&#8592; {{ backLabel }}</button>
+    <h1 class="menu-title">{{ titleLabel }}</h1>
+
+    <div class="diff-options">
+      <button
+        *ngFor="let d of difficulties"
+        class="diff-btn"
+        [style.--accent]="d.color"
+        (click)="selectDifficulty(d.key)">
+        <span class="diff-label" [style.color]="d.color">
+          {{ isHungarian ? d.labelHu : d.labelEn }}
+        </span>
+        <span class="diff-lives">
+          <span *ngFor="let h of [].constructor(d.maxWrong)" class="heart">&#9829;</span>
+          <span *ngFor="let h of [].constructor(10 - d.maxWrong)" class="heart empty">&#9829;</span>
+        </span>
+        <span class="diff-desc">{{ isHungarian ? d.descHu : d.descEn }}</span>
+      </button>
+    </div>
+  </div>
+</div>

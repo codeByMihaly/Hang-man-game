@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import { GameRoutingModule } from './game-routing.module';
 import { GameComponent } from './game.component';
@@ -15,6 +16,7 @@ import { WordDisplayComponent } from '../components/word-display/word-display.co
   ],
   imports: [
     CommonModule,
+    RouterModule,
     GameRoutingModule
   ]
 })

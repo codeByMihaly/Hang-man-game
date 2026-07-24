@@ -1,18 +1,18 @@
 <div class="game-container">
   <header class="game-header">
-    <h1 class="game-title">Hangman</h1>
-    <p class="game-subtitle">Guess the word — click a letter or press a key!</p>
+    <h1 class="game-title">{{ titleLabel }}</h1>
+    <p class="game-subtitle">{{ subtitleLabel }}</p>
   </header>
 
   <!-- Score Board -->
   <div class="scoreboard">
     <div class="score-item wins">
-      <span class="score-label">Wins</span>
+      <span class="score-label">{{ winsLabel }}</span>
       <span class="score-value">{{ wins }}</span>
     </div>
     <div class="score-divider">|</div>
     <div class="score-item losses">
-      <span class="score-label">Losses</span>
+      <span class="score-label">{{ lossesLabel }}</span>
       <span class="score-value">{{ losses }}</span>
     </div>
   </div>
@@ -23,11 +23,17 @@
          [class.won]="state.gameStatus === 'won'"
          [class.lost]="state.gameStatus === 'lost'">
       <ng-container *ngIf="state.gameStatus === 'won'">
-        You won! The word was <strong>{{ state.word }}</strong>
+        {{ wonMessage }}<strong>{{ state.word }}</strong>
       </ng-container>
       <ng-container *ngIf="state.gameStatus === 'lost'">
-        Game over! The word was <strong>{{ state.word }}</strong>
+        {{ lostMessage }}<strong>{{ state.word }}</strong>
       </ng-container>
+
+      <!-- Post-game action buttons -->
+      <div class="post-game-btns">
+        <button class="post-btn same" (click)="newGame()">{{ sameSettingsLabel }}</button>
+        <button class="post-btn settings" (click)="goToSettings()">{{ changeSettingsLabel }}</button>
+      </div>
     </div>
 
     <!-- Main Game Area -->
@@ -37,7 +43,7 @@
         <app-hangman-svg [wrongGuesses]="wrongGuessCount"></app-hangman-svg>
         <p class="attempts-left"
            [class.danger]="remainingGuesses <= 2">
-          {{ remainingGuesses }} attempt{{ remainingGuesses !== 1 ? 's' : '' }} left
+          {{ attemptsLeftLabel }}
         </p>
       </div>
 
@@ -45,35 +51,37 @@
       <div class="word-panel">
         <!-- Category hint -->
         <div class="category-hint" *ngIf="state.category">
-          Category: <strong>{{ state.category }}</strong>
+          {{ categoryLabel }}: <strong>{{ state.category }}</strong>
         </div>
 
         <app-word-display [maskedWord]="maskedWord"></app-word-display>
 
         <!-- Wrong letters display -->
         <div class="wrong-letters" *ngIf="wrongLetters.length > 0">
-          <span class="wrong-label">Wrong: </span>
+          <span class="wrong-label">{{ wrongLabel }}</span>
           <span *ngFor="let l of wrongLetters" class="wrong-letter">{{ l }}</span>
         </div>
 
-        <!-- Alphabet keyboard -->
+        <!-- Keyboard — only shown while playing -->
         <div class="keyboard" *ngIf="state.gameStatus === 'playing'">
-          <button
-            *ngFor="let letter of alphabet"
-            class="key-btn"
-            [class.wrong]="isWrong(letter)"
-            [class.correct]="isGuessed(letter) && !isWrong(letter)"
-            [disabled]="isGuessed(letter)"
-            (click)="onLetterClick(letter)">
-            {{ letter }}
-          </button>
+          <div class="keyboard-row" *ngFor="let row of keyboardRows">
+            <button
+              *ngFor="let letter of row"
+              class="key-btn"
+              [class.wrong]="isWrong(letter)"
+              [class.correct]="isGuessed(letter) && !isWrong(letter)"
+              [disabled]="isGuessed(letter)"
+              (click)="onLetterClick(letter)">
+              {{ letter }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- New Game button -->
-    <div class="new-game-row">
-      <button class="new-game-btn" (click)="newGame()">New Game</button>
+    <!-- New Game button (only during play) -->
+    <div class="new-game-row" *ngIf="state.gameStatus === 'playing'">
+      <button class="new-game-btn" (click)="newGame()">{{ newGameLabel }}</button>
     </div>
   </ng-container>
 </div>

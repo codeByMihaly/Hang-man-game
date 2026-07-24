@@ -73,7 +73,7 @@
   width: 100%;
   max-width: 700px;
   text-align: center;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1.5rem 1.25rem;
   border-radius: 8px;
   font-size: 1.1rem;
   font-weight: 600;
@@ -90,6 +90,39 @@
     background: rgba(231, 76, 60, 0.2);
     border: 2px solid #e74c3c;
     color: #e74c3c;
+  }
+}
+
+.post-game-btns {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 0.9rem;
+}
+
+.post-btn {
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: background 0.15s, transform 0.1s;
+
+  &.same {
+    background: #2ecc71;
+    color: #1a1a2e;
+    &:hover { background: #27ae60; transform: scale(1.03); }
+    &:active { transform: scale(0.97); }
+  }
+
+  &.settings {
+    background: #34495e;
+    color: #ecf0f1;
+    &:hover { background: #4a6278; transform: scale(1.03); }
+    &:active { transform: scale(0.97); }
   }
 }
 
@@ -167,11 +200,16 @@
 /* ── Alphabet keyboard ───────────────────────── */
 .keyboard {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: center;
+  margin: 0.5rem 0 1rem;
+}
+
+.keyboard-row {
+  display: flex;
   gap: 0.4rem;
   justify-content: center;
-  max-width: 360px;
-  margin: 0.5rem 0 1rem;
 }
 
 .key-btn {
